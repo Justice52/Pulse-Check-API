@@ -36,11 +36,11 @@ class Monitor(models.Model):
     def __str__(self):
         return self.device_id
     
-    class AlertLog(models.Model):
+class AlertLog(models.Model):
     """Developer's Choice: persistent audit log of every fired alert."""
-    device_id = models.CharField(max_length=255)
-    alert_email = models.EmailField()
-    fired_at = models.DateTimeField(auto_now_add=True)
+device_id = models.CharField(max_length=255)
+alert_email = models.EmailField()
+fired_at = models.DateTimeField(auto_now_add=True)
  
-    def __str__(self):
-        return f'ALERT {self.device_id} @ {self.fired_at}'
+def __str__(self):
+    return f'ALERT {self.device_id} @ {self.fired_at}'
