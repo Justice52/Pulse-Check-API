@@ -58,8 +58,11 @@ class HeartbeatView(APIView):
         monitor.save()
 
         return Response(
-            {
-                "message": "Heartbeat received."
-            },
-            status=status.HTTP_200_OK
-        )
+        {
+            "message": "Heartbeat received.",
+            "device_id": monitor.device_id,
+            "status": monitor.status,
+            "last_heartbeat": monitor.last_heartbeat,
+        },
+        status=status.HTTP_200_OK,
+    )
