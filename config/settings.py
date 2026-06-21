@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'monitors',
+    'monitors.apps.MonitorsConfig',  # Register the monitors app
 ]
 
 MIDDLEWARE = [

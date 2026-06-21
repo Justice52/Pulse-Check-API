@@ -24,6 +24,6 @@ def check_monitors():
                 {
                     "ALERT": f"Device {monitor.device_id} is down!",
                     "time": now.isoformat(),
-                    "last_heartbeat": monitor.last_heartbeat,
+                    # "last_heartbeat": monitor.last_heartbeat,
                 }
             )
