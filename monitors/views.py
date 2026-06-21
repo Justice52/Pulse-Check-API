@@ -22,7 +22,7 @@ class MonitorCreateView(APIView):
 
             return Response(
                 {
-                    "message": "Monitor created successfully."
+                    "message": "Device created successfully."
                 },
                 status=status.HTTP_201_CREATED
             )
@@ -45,7 +45,7 @@ class HeartbeatView(APIView):
         if monitor.status == "down":
             return Response(
                 {
-                    "message": "Monitor has already expired."
+                    "message": "Device is down."
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
@@ -66,3 +66,40 @@ class HeartbeatView(APIView):
         },
         status=status.HTTP_200_OK,
     )
+
+
+class PauseMonitorView(APIView):
+
+    def post(self, request, device_id):
+
+        monitor = get_object_or_404(
+            Monitor,
+            device_id=device_id
+        )
+
+        if monitor.status == "down":
+            return Response(
+                {
+                    "message": "Cannot pause a device that is already down."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if monitor.status == "paused":
+            return Response(
+                {
+                    "message": "Device is already paused."
+                },
+                status=status.HTTP_200_OK
+            )
+
+        monitor.status = "paused"
+        monitor.save()
+
+        return Response(
+            {
+                "message": "Monitor paused successfully.",
+                "status": monitor.status
+            },
+            status=status.HTTP_200_OK
+        )
