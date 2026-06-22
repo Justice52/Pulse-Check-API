@@ -98,11 +98,15 @@ flowchart TD
     python -m venv venv
     ```
 
-    - Activate
+- Activate
 
     Windows
     ```
     venv\Scripts\activate
+    ```
+    Mac
+    ```
+    source venv/bin/activate
     ```
 - Install dependencies
 
@@ -251,17 +255,14 @@ Response
 
 ## Developer's Choice
 
-I added monitor status endpoints that allow administrators to retrieve either all registered monitors or a specific monitor.
+I have added monitor status endpoints where an administrator can get either all the registered monitors or one particular monitor.
 
-This improves the observability of the system by making it possible to inspect device status (ACTIVE, PAUSED, or DOWN) without accessing the database.
-
-These endpoints are useful for dashboards, monitoring tools, and troubleshooting in real-world deployments.
+The ability to observe this system will be made easier since you can observe the status of devices (ACTIVE, PAUSED, or DOWN) without looking at the database.
 
 ## Design Decisions
 
-Instead of creating a separate timer thread for every monitor, this project stores the timestamp of the last heartbeat.
+Rather than having a dedicated timer thread for each monitor, this application records the timestamp of the most recent heartbeat.
 
-A background scheduler periodically checks whether the elapsed time since the last heartbeat exceeds the configured timeout.
+The background scheduler then regularly verifies whether the duration since the most recent heartbeat has exceeded the timeout duration.
 
-This approach scales significantly better than maintaining thousands of independent timers and reflects how production monitoring systems are commonly implemented.
-
+This is far more scalable compared to keeping several thousand separate timers running and is reflective of how monitoring systems actually function in practice.
