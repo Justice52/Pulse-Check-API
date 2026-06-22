@@ -92,7 +92,10 @@ flowchart TD
     ```
    git clone https://github.com/Justice52/Pulse-Check-API.git
     ```
-
+- Change directory 
+    ```
+    cd Pulse-Check-API
+    ```
 - Create virtual environment
     ```
     python -m venv venv
