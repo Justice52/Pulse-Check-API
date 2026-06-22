@@ -137,7 +137,7 @@ flowchart TD
     http://127.0.0.1:8000/
     ```
 
-## API Documentation
+## 3. API Documentation
 - Register a Monitor
 
 ```POST /api/monitors```
@@ -253,7 +253,7 @@ Response
 }
 ```
 
-## Developer's Choice
+## 4. Developer's Choice
 
 I have added monitor status endpoints where an administrator can get either all the registered monitors or one particular monitor.
 
