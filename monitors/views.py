@@ -7,10 +7,11 @@ from django.utils import timezone
 
 from .models import Monitor
 
-from .serializers import MonitorSerializer
+from .serializers import MonitorSerializer, MonitorDetailSerializer
 
 
 class MonitorCreateView(APIView):
+    """Create a new device."""
 
     def post(self, request):
 
@@ -34,6 +35,7 @@ class MonitorCreateView(APIView):
     
 
 class HeartbeatView(APIView):
+    """Send a heartbeat for a specific device."""
 
     def post(self, request, device_id):
 
@@ -59,7 +61,7 @@ class HeartbeatView(APIView):
 
         return Response(
         {
-            "message": "Heartbeat received.",
+            "message": "I'm alive.",
             "device_id": monitor.device_id,
             "status": monitor.status,
             "last_heartbeat": monitor.last_heartbeat,
@@ -69,7 +71,7 @@ class HeartbeatView(APIView):
 
 
 class PauseMonitorView(APIView):
-
+    """Pauses a device."""
     def post(self, request, device_id):
 
         monitor = get_object_or_404(
@@ -103,3 +105,36 @@ class PauseMonitorView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
+
+class MonitorListView(APIView):
+    """Developer's Choice: List all monitors with details."""
+
+    def get(self, request):
+
+        monitors = Monitor.objects.all().order_by("-created_at")
+
+        serializer = MonitorDetailSerializer(
+            monitors,
+            many=True
+        )
+
+        return Response(serializer.data)
+    
+
+    
+
+class MonitorDetailView(APIView):
+    """Developer's Choice: Get details of a specific monitor."""
+
+    def get(self, request, device_id):
+
+        monitor = get_object_or_404(
+            Monitor,
+            device_id=device_id
+        )
+
+        serializer = MonitorDetailSerializer(monitor)
+
+        return Response(serializer.data)
+    
