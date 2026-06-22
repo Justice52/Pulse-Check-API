@@ -98,7 +98,7 @@ flowchart TD
     python -m venv venv
     ```
 
-    Activate
+    - Activate
 
     Windows
     ```
